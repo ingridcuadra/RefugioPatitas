@@ -36,8 +36,12 @@ def pedir_fecha(mensaje="Fecha"):
 
 
 def confirmar(mensaje):
-    respuesta = input(f"{mensaje} (s/n): ").strip().lower()
-    return respuesta == "s"
+    while True:
+        respuesta = input(f"{mensaje} (s/n): ").strip().lower()
+        if respuesta in ("s", "n"):
+            return respuesta == "s"
+
+        print("⚠ Ingresá 's' o 'n'.")
 
 def validar_email():
     while True:
