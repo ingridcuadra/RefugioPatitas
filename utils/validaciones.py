@@ -38,3 +38,22 @@ def pedir_fecha(mensaje="Fecha"):
 def confirmar(mensaje):
     respuesta = input(f"{mensaje} (s/n): ").strip().lower()
     return respuesta == "s"
+
+def validar_email():
+    while True:
+        email = input("Email: ").strip()
+
+        if "@" in email and "." in email:
+            return email
+
+        print("⚠ Ingresá un email válido.")
+
+
+def validar_telefono():
+    while True:
+        telefono = input("Teléfono: ").strip()
+
+        if telefono.isdigit() and len(telefono) >= 8:
+            return telefono
+
+        print("⚠ Ingresá un teléfono válido.")
