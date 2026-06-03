@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "id_animal": 3,
+        "id_adoptante": 1,
+        "fecha_adopcion": "02/06/2026",
+        "seguimientos": [
+            {
+                "fecha_seguimiento": "02/06/2026",
+                "nota_seguimiento": "Luna se porta excelente."
+            }
+        ],
+        "estado": "Activa"
+    },
+    {
+        "id": 2,
+        "id_animal": 4,
+        "id_adoptante": 2,
+        "fecha_adopcion": "02/06/2026",
+        "seguimientos": [],
+        "estado": "Revertida"
+    },
+    {
+        "id": 3,
+        "id_animal": 4,
+        "id_adoptante": 1,
+        "fecha_adopcion": "02/06/2026",
+        "seguimientos": [],
+        "estado": "Activa"
+    }
+]

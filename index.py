@@ -7,13 +7,13 @@ from modulos.voluntarios_donantes import submenu_voluntarios_donantes
 def menu_principal():
     while True:
         print("\n" + "═"*51)
-        print("  🐾 REFUGIO PATITAS DEL LITORAL")
+        print("  🐾 REFUGIO PATITAS DEL LITORAL 🐾  ")
         print("═"*51)
-        print("  1. Animales del refugio (Módulo compañero)")
-        print("  2. Familias adoptantes (TU MÓDULO)")
+        print("  1. Animales del refugio")
+        print("  2. Familias adoptantes")
         print("  3. Adopciones")
-        print("  4. Atención veterinaria (Módulo compañero)")
-        print("  5. Voluntarios y donantes (Módulo compañero)")
+        print("  4. Atención veterinaria")
+        print("  5. Voluntarios y donantes")
         print("  0. Salir")
         print("═"*51)
         

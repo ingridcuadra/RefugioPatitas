@@ -1,42 +1,20 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
-from utils.validaciones import incrementar_id, confirmar, validar_id_seleccionado, validar_email, validar_telefono
+from utils.validaciones import confirmar_accion, validar_numero_seleccionado, validar_email, validar_telefono
+from utils.funciones import incrementar_id, leer_registros, guardar_registro
 from utils.navegar_menu import elegir_opcion
 
-adoptantes = []
-
+ARCHIVO_ADOPTANTES_RUTA = "archivos/adoptantes.json"
 TIPOS_VIVIENDA = (
     "casa_con_patio",
     "departamento",
     "casa_sin_patio"
 )
 
-def submenu_adoptantes():
-    while True:
-        formatear_titulo(" FAMILIAS ADOPTANTES")
-        print("1. Registrar familia")
-        print("2. Listar familias")
-        print("3. Buscar familia")
-        print("4. Actualizar datos de una familia")
-        print("5. Eliminar familia")
-        print("9. Volver al menu principal")
-
-        opcion = elegir_opcion({"1", "2", "3", "4", "5", "9"})
-
-        if opcion == "1":
-            registrar_familia()
-        elif opcion == "2":
-            listar_adoptantes()
-        elif opcion == "3":
-            buscar_familia()
-        elif opcion == "4":
-            actualizar_familia()
-        elif opcion == "5":
-            eliminar_familia()
-        elif opcion == "9":
-            break
-
+def leer_adoptantes():
+    return leer_registros(ARCHIVO_ADOPTANTES_RUTA)
 
 def registrar_familia():
+    adoptantes = leer_adoptantes()
     formatear_titulo("NUEVA FAMILIA")
 
     dni = input("DNI: ").strip()
@@ -54,7 +32,7 @@ def registrar_familia():
 
     print("\nTipo de vivienda:")
     print("1) Casa con patio 2) Departamento 3) Casa sin patio")
-    idx = validar_id_seleccionado("Elegí (1-3): ", 1, 3)
+    idx = validar_numero_seleccionado("Elegí (1-3): ", 1, 3)
     vivienda = TIPOS_VIVIENDA[(idx)-1]
 
     while True:
@@ -77,9 +55,10 @@ def registrar_familia():
     "tipo_vivienda": vivienda,
     "otras_mascotas": otras_mascotas
     }
+    
     adoptantes.append(adoptante)
+    guardar_registro(ARCHIVO_ADOPTANTES_RUTA, adoptantes)
     print(f"\n✅ Familia registrada con ID #{adoptante['id']}")
-
 
 def mostrar_adoptante(adoptante):
     agregar_separador()
@@ -91,8 +70,8 @@ def mostrar_adoptante(adoptante):
     print(f"Vivienda: "f"{adoptante['tipo_vivienda']}")
     print(f"Otras mascotas: "f"{'Sí' if adoptante['otras_mascotas'] else 'No'}")
 
-
 def listar_adoptantes():
+    adoptantes = leer_adoptantes()
     formatear_titulo("LISTADO DE FAMILIAS")
 
     if not adoptantes:
@@ -107,6 +86,7 @@ def listar_adoptantes():
     print(f"Total: {len(adoptantes)} familia/s.")
 
 def buscar_por_nombre_o_dni():
+    adoptantes = leer_adoptantes()
     texto = input("Ingresá nombre o número de dni: ").strip()
 
     if texto.isdigit():
@@ -138,7 +118,6 @@ def buscar_familia():
 
     agregar_separador()
 
-
 def actualizar_familia():
     formatear_titulo("ACTUALIZAR FAMILIA")
 
@@ -167,14 +146,40 @@ def actualizar_familia():
     
     print("\n✅ Datos actualizados.")
 
-
 def eliminar_familia():
+    adoptantes = leer_adoptantes() 
     formatear_titulo("ELIMINAR UNA FAMILIA")
     resultados = buscar_por_nombre_o_dni()
     if not resultados:
             print("No se encontró ninguna familia.")
             return
     for adoptante in resultados:
-        if confirmar(f"¿Eliminar a {adoptante['nombre']}?"):
+        if confirmar_accion(f"¿Eliminar a {adoptante['nombre']}?"):
             adoptantes.remove(adoptante)
+            guardar_registro(ARCHIVO_ADOPTANTES_RUTA, adoptantes)
             print("✅ Familia eliminada.")
+
+def submenu_adoptantes():
+    while True:
+        formatear_titulo(" FAMILIAS ADOPTANTES")
+        print("1. Registrar familia")
+        print("2. Listar familias")
+        print("3. Buscar familia")
+        print("4. Actualizar datos de una familia")
+        print("5. Eliminar familia")
+        print("9. Volver al menu principal")
+
+        opcion = elegir_opcion({"1", "2", "3", "4", "5", "9"})
+
+        if opcion == "1":
+            registrar_familia()
+        elif opcion == "2":
+            listar_adoptantes()
+        elif opcion == "3":
+            buscar_familia()
+        elif opcion == "4":
+            actualizar_familia()
+        elif opcion == "5":
+            eliminar_familia()
+        elif opcion == "9":
+            break

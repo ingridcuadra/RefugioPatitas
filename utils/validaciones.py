@@ -1,15 +1,7 @@
-from datetime import date
-
-
-def incrementar_id(lista):
-    if not lista:
-        return 1
-    return max(r["id"] for r in lista) + 1
-
-
+import json, os
 
 # validad que el input sea un numero entero y que este dentro de un rango de minimo y maximo
-def validar_id_seleccionado(mensaje, minimo=None, maximo=None):
+def validar_numero_seleccionado(mensaje, minimo=None, maximo=None):
     while True:
         texto = input(mensaje).strip()
         if texto.isdigit():
@@ -23,26 +15,6 @@ def validar_id_seleccionado(mensaje, minimo=None, maximo=None):
             return valor
         print("  ⚠  Eso no es un número válido. Intentá de nuevo.")
 
-
-
-def pedir_fecha(mensaje="Fecha"):
-    print(f"\n{mensaje}")
-
-    dia = validar_id_seleccionado("Día: ", 1, 31)
-    mes = validar_id_seleccionado("Mes: ", 1, 12)
-    anio = validar_id_seleccionado("Año: ", 2000)
-
-    return date(anio, mes, dia)
-
-
-def confirmar(mensaje):
-    while True:
-        respuesta = input(f"{mensaje} (s/n): ").strip().lower()
-        if respuesta in ("s", "n"):
-            return respuesta == "s"
-
-        print("⚠ Ingresá 's' o 'n'.")
-
 def validar_email():
     while True:
         email = input("Email: ").strip()
@@ -52,7 +24,6 @@ def validar_email():
 
         print("⚠ Ingresá un email válido.")
 
-
 def validar_telefono():
     while True:
         telefono = input("Teléfono: ").strip()
@@ -61,3 +32,18 @@ def validar_telefono():
             return telefono
 
         print("⚠ Ingresá un teléfono válido.")
+
+def confirmar_accion(mensaje):
+    while True:
+        respuesta = input(f"{mensaje} (Si/No): ").strip().lower()
+        if respuesta in ("Si", "No"):
+            return respuesta == "Si"
+
+        print("⚠ Ingresá 'Si' o 'No'.")
+
+# Retorna el modo correcto según si existe el archivo o no
+def validar_archivo_existe(archivo):
+    if not os.path.exists(archivo):
+        return True
+    else: 
+        return False

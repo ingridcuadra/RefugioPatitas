@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "nombre": "Pepito",
+        "especie": "gato",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "01/06/2024",
+        "estado": "en_refugio",
+        "historia": "test"
+    },
+    {
+        "id": 2,
+        "nombre": "Pepito 2",
+        "especie": "gato",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "02/06/2026",
+        "estado": "en_refugio",
+        "historia": "bien"
+    },
+    {
+        "id": 3,
+        "nombre": "Luna",
+        "especie": "perro",
+        "edad_aproximada": 2,
+        "fecha_ingreso": "03/04/2026",
+        "estado": "en_refugio",
+        "historia": "muy bien"
+    },
+    {
+        "id": 4,
+        "nombre": "Prueba",
+        "especie": "perro",
+        "edad_aproximada": 1,
+        "fecha_ingreso": "01/01/2001",
+        "estado": "en_refugio",
+        "historia": "hola"
+    }
+]
