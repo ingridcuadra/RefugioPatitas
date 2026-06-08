@@ -26,13 +26,13 @@ def submenu_atencion_veterinaria():
         elif opcion == "2":
             listar_atenciones()
         elif opcion == "3":
-            print("Función pendiente")
+            buscar_atencion_por_animal()
         elif opcion == "4":
-            print("Función pendiente")
+            buscar_atencion_por_tipo()
         elif opcion == "5":
-            print("Función pendiente")
+            actualizar_atencion()
         elif opcion == "6":
-            print("Función pendiente")
+            eliminar_atencion()
         elif opcion == "9":
             break
 
@@ -91,6 +91,7 @@ def mostrar_atencion(atencion):
     print(f"Tipo: {atencion['tipo']}")
     print(f"Observaciones: {atencion['observaciones']}")
 
+
 def listar_atenciones():
     formatear_titulo("LISTADO DE ATENCIONES")
 
@@ -103,3 +104,104 @@ def listar_atenciones():
 
     agregar_separador()
     print(f"total {len(atenciones)} atencion/es registradas.")
+
+
+
+def buscar_por_id_animal():
+    id_animal = validar_id_seleccionado("Ingrese ID del animal:", 1)
+
+    resultados = [
+        atencion
+        for atencion in atenciones
+        if atencion["id_animal"] == id_animal
+    ]
+
+    return resultados
+
+def buscar_atencion_por_animal():
+    formatear_titulo("BUSCAR ATENCION POR ANIMAL")
+    resultados = buscar_por_id_animal()
+
+    if not resultados:
+        print("No se encontraron atenciones para ese animal")
+
+    for atencion in resultados:
+        mostrar_atencion(atencion)
+
+    agregar_separador()
+
+
+
+def buscar_por_tipo():
+    formatear_titulo("BUSCAR ATENCION POR TIPO")
+
+    print("Tipo de atención: 1) vacuna 2) desparasitacion 3) control 4) cirugia 5) otro")
+    idx = validar_id_seleccionado("Elegí (1-5): ", 1, 5)
+    tipo = TIPOS_ATENCION[idx - 1]
+
+    resultados = [
+        atencion
+        for atencion in atenciones
+        if atencion["tipo"] == tipo
+    ]
+
+    return resultados
+
+def buscar_atencion_por_tipo():
+    resultados = buscar_por_tipo()
+
+    if not resultados:
+        print("No se encontraron atenciones para ese tipo.")
+        return
+
+    for atencion in resultados:
+        mostrar_atencion(atencion)
+
+    
+    return resultados
+
+
+def actualizar_atencion():
+    formatear_titulo("ACTUALIZAR ATENCION")
+
+    id_atencion = validar_id_seleccionado("Ingrese ID de la atención a modificar: ")
+
+    atencion_encontrada = None
+
+    for atencion in atenciones:
+        if atencion["id"] == id_atencion:
+            atencion_encontrada = atencion
+            break 
+
+    if atencion_encontrada is None:
+        print("No se encontró una atencion con ese ID.")
+        return
+
+    mostrar_atencion(atencion_encontrada)
+
+    print("Tipos disponibles: 1) Vacuna 2) Desparasitación 3) Control 4) Cirugia 5) Otro")
+    idx = validar_id_seleccionado("Elegí (1-5): ",1,5)
+
+    atencion_encontrada["tipo"] = TIPOS_ATENCION[idx - 1]
+
+    nuevas_observaciones = input(f"Observaciones [{atencion_encontrada['observaciones']}]: ").strip()
+
+    if nuevas_observaciones:
+        atencion_encontrada["observaciones"] = nuevas_observaciones
+
+    print("\n✅ Atención actualizada.")
+
+
+
+
+def eliminar_atencion():
+    formatear_titulo("ELIMINAR ATENCION")
+    resultados = buscar_por_id_animal()
+    if not resultados:
+            print("No se encontró ninguna atencion.")
+            return
+    for atencion in resultados:
+        mostrar_atencion(atencion)
+        if confirmar(f"¿Eliminar a #{atencion['id']}?"):
+            atenciones.remove(atencion)
+            print("✅ Atención eliminada.")
