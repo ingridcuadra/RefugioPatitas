@@ -154,10 +154,10 @@ def eliminar_familia():
             print("No se encontró ninguna familia.")
             return
     for adoptante in resultados:
-        if confirmar_accion(f"¿Eliminar a {adoptante['nombre']}?"):
+        if confirmar_accion(f"¿Estás seguro de que deseas eliminar a {adoptante['nombre']}? Esta acción no se puede deshacer."):
             adoptantes.remove(adoptante)
             guardar_registro(ARCHIVO_ADOPTANTES_RUTA, adoptantes)
-            print("✅ Familia eliminada.")
+            print("Familia eliminada con éxito.")
 
 def submenu_adoptantes():
     while True:
@@ -168,18 +168,17 @@ def submenu_adoptantes():
         print("4. Actualizar datos de una familia")
         print("5. Eliminar familia")
         print("9. Volver al menu principal")
-
-        opcion = elegir_opcion({"1", "2", "3", "4", "5", "9"})
-
-        if opcion == "1":
-            registrar_familia()
-        elif opcion == "2":
-            listar_adoptantes()
-        elif opcion == "3":
-            buscar_familia()
-        elif opcion == "4":
-            actualizar_familia()
-        elif opcion == "5":
-            eliminar_familia()
-        elif opcion == "9":
-            break
+        opcion = elegir_opcion("¿Qué querés hacer?" ,{"1", "2", "3", "4", "5", "9"})
+        match opcion:
+            case "1":
+                registrar_familia()
+            case "2":
+                listar_adoptantes()
+            case "3":
+                buscar_familia()
+            case "4":
+                actualizar_familia()
+            case "5":
+                eliminar_familia()
+            case "9":
+                break

@@ -48,3 +48,18 @@ def buscar_por_id(registros):
         for registro in registros
         if registro["id"] == id_buscado
     ]
+
+def seleccionar_por_id(registros):
+    resultados = buscar_por_id(registros)
+
+    if not resultados:
+        print("No se encontró ningún registro con ese ID.")
+        return None
+    return resultados[0]
+
+def encontrar_registro_por_id(id_registros, registros):
+    for registro in registros:
+        match registro:
+            case { "id": reg_id } if reg_id == id_registros:
+                return registro
+    return None 

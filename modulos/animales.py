@@ -1,7 +1,7 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
-from utils.validaciones import validar_numero_seleccionado
-from utils.funciones import incrementar_id, pedir_fecha, leer_registros, guardar_registro
+from utils.validaciones import validar_numero_seleccionado, confirmar_accion
+from utils.funciones import incrementar_id, pedir_fecha, leer_registros, guardar_registro, seleccionar_por_id, encontrar_registro_por_id
 
 ARCHIVO_ANIMALES_RUTA = "archivos/animales.json"
 ESTADOS_ANIMAL = ("en_refugio", "en_adopcion", "adoptado")
@@ -28,7 +28,7 @@ def cargar_animal():
         "especie": especie,
         "edad_aproximada": edad,
         "fecha_ingreso": fecha_ingreso,
-        "estado": "en_refugio",
+        "estado": ESTADOS_ANIMAL[0],
         "historia": historia,
     }
 
@@ -49,7 +49,7 @@ def mostrar_animal(animal):
 def listar_animales():
     formatear_titulo("LISTADO DE ANIMALES")
     print("  Filtrar por: 1) Todos  2) En refugio  3) En adopción  4) Adoptados")
-    opcion = elegir_opcion({"1", "2", "3", "4"})
+    opcion = elegir_opcion("¿Por cuál filtramos?", {"1", "2", "3", "4"})
     filtros = {
         "1": None,
         "2": "en_refugio",
@@ -101,25 +101,71 @@ def buscar_animal():
 
     agregar_separador()
 
+def dar_baja_animal():
+    animales = leer_animales()
+    formatear_titulo("DAR DE BAJA A UN ANIMAL")
+    resultados = buscar_por_nombre_o_id()
+
+    if not resultados:
+        print("No se encontró el animal buscado")
+        return
+    
+    for animal in resultados:
+        if confirmar_accion(f"¿Estás seguro de que deseas dar de baja a {animal['nombre']}? Esta acción no se puede deshacer."):
+            animales.remove(animal)
+            guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
+            print("Animal dado de baja con éxito.")
+
+def cambiar_estado_animal(id_animal, index_estado):
+    animales = leer_animales()
+
+    if id_animal is None:
+        return
+    
+    if index_estado is None:
+        return
+    
+    animal = encontrar_registro_por_id(id_animal, animales)
+    animal["estado"] = ESTADOS_ANIMAL[index_estado]
+
+    guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
+
+def pasar_animal_a_en_adopcion():
+    animales = leer_animales()
+    if not animales:
+        print("Aún no hay animales cargados. Carga uno antes de cambiar un estado.")
+        return
+    
+    animal = seleccionar_por_id(animales)
+    if animal is None:
+        return
+
+    animal["estado"] = ESTADOS_ANIMAL[1]
+
+    guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
+    print(f"\n✅ El estado del animal #{animal['id']} se cambió con éxito.")
+    mostrar_animal(animal)
+
 def submenu_animales():
     while True:
         formatear_titulo("ANIMALES DEL REFUGIO")
         print("  1. Cargar un animal nuevo")
         print("  2. Ver listado de animales")
         print("  3. Buscar un animal")
-        print("  4. Cambiar estado de un animal")
+        print("  4. Cambiar estado de un animal a 'En adopción'")
         print("  5. Dar de baja un animal")
         print("  9. Volver al menú principal")
-        opcion = elegir_opcion({"1", "2", "3", "4", "5", "9"})
-        if opcion == "1":
-            cargar_animal()
-        elif opcion == "2":
-            listar_animales()
-        elif opcion == "3":
-            buscar_animal()
-        elif opcion == "4":
-            print("Función pendiente")
-        elif opcion == "5":
-            print("Función pendiente")
-        elif opcion == "9":
-            break
+        opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5", "9"})
+        match opcion:
+            case "1":
+                cargar_animal()
+            case "2":
+                listar_animales()
+            case "3":
+                buscar_animal()
+            case "4":
+                pasar_animal_a_en_adopcion()
+            case "5":
+                dar_baja_animal()
+            case "9":
+                break

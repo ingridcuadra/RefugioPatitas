@@ -27,5 +27,29 @@
         "fecha_adopcion": "02/06/2026",
         "seguimientos": [],
         "estado": "Activa"
+    },
+    {
+        "id": 4,
+        "id_animal": 2,
+        "id_adoptante": 1,
+        "fecha_adopcion": "11/06/2026",
+        "seguimientos": [],
+        "estado": "Revertida"
+    },
+    {
+        "id": 5,
+        "id_animal": 2,
+        "id_adoptante": 2,
+        "fecha_adopcion": "11/06/2026",
+        "seguimientos": [],
+        "estado": "Activa"
+    },
+    {
+        "id": 6,
+        "id_animal": 1,
+        "id_adoptante": 1,
+        "fecha_adopcion": "11/06/2026",
+        "seguimientos": [],
+        "estado": "Activa"
     }
 ]

@@ -5,7 +5,7 @@
         "especie": "gato",
         "edad_aproximada": 5,
         "fecha_ingreso": "01/06/2024",
-        "estado": "en_refugio",
+        "estado": "adoptado",
         "historia": "test"
     },
     {
@@ -14,7 +14,7 @@
         "especie": "gato",
         "edad_aproximada": 5,
         "fecha_ingreso": "02/06/2026",
-        "estado": "en_refugio",
+        "estado": "adoptado",
         "historia": "bien"
     },
     {
@@ -23,7 +23,7 @@
         "especie": "perro",
         "edad_aproximada": 2,
         "fecha_ingreso": "03/04/2026",
-        "estado": "en_refugio",
+        "estado": "adoptado",
         "historia": "muy bien"
     },
     {
@@ -32,7 +32,16 @@
         "especie": "perro",
         "edad_aproximada": 1,
         "fecha_ingreso": "01/01/2001",
-        "estado": "en_refugio",
+        "estado": "adoptado",
         "historia": "hola"
+    },
+    {
+        "id": 5,
+        "nombre": "Jorge",
+        "especie": "otro",
+        "edad_aproximada": 3,
+        "fecha_ingreso": "03/04/2026",
+        "estado": "en_refugio",
+        "historia": "bien"
     }
 ]
