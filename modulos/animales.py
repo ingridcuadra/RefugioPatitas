@@ -24,9 +24,9 @@ def submenu_animales():
         elif opcion == "3":
             buscar_animal()
         elif opcion == "4":
-            print("Función pendiente")
+            modificar_estado_animal()
         elif opcion == "5":
-            print("Función pendiente")
+            eliminar_animal()
         elif opcion == "9":
             break
 
@@ -34,8 +34,8 @@ def submenu_animales():
 def cargar_animal():
     formatear_titulo("NUEVO ANIMAL")
     nombre = input("Nombre: ").strip()
+    
     print("\nEspecies disponibles:")
-
     print("Especie: 1) perro  2) gato  3) otro")
     idx = validar_id_seleccionado("Elegí (1-3): ", 1, 3)
     especie = ESPECIES[idx - 1]
@@ -55,7 +55,6 @@ def cargar_animal():
     }
 
     animales.append(animal)
-    print(animales)
     print(f"\n✅ {nombre} fue registrado con ID #{animal['id']}")
 
 
@@ -86,6 +85,7 @@ def listar_animales():
         return
     for a in lista:
         mostrar_animal(a)
+
     agregar_separador()
     print(f"  Total: {len(lista)} animal/es.")
 
@@ -121,3 +121,36 @@ def buscar_animal():
         mostrar_animal(animal)
 
     agregar_separador()
+
+
+def modificar_estado_animal():
+    formatear_titulo("MODIFICAR ESTADO DE ANIMAL")
+    resultados = buscar_por_nombre_o_id()
+
+    if not resultados:
+        print("No se encontró ningún animal.")
+        return
+    animal = resultados[0]
+    mostrar_animal(animal)
+
+    print("Estados disponibles: 1) en refugio 2) en adopción 3) adoptado")
+    opcion = elegir_opcion({"1", "2", "3"})
+    nuevo_estado = ESTADOS_ANIMAL[int(opcion) - 1]
+    if animal["estado"] == nuevo_estado:
+        print(f"El nuevo estado es el mismo que el actual ({nuevo_estado}). No se realizarán cambios.")
+    else:
+        print(f"Cambiando estado de #{animal['nombre']} de '{animal['estado']}' a '{nuevo_estado}'")
+        animal["estado"] = nuevo_estado
+
+
+def eliminar_animal():
+    formatear_titulo("ELIMINAR ANIMAL")
+    resultados = buscar_por_nombre_o_id()
+    if not resultados:
+            print("No se encontró ningún animal.")
+            return
+    for animal in resultados:
+        mostrar_animal(animal)
+        if confirmar(f"¿Eliminar a #{animal['nombre']}?"):
+            animales.remove(animal)
+            print("✅ Animal eliminado.")
