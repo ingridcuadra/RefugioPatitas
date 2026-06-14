@@ -1,10 +1,10 @@
-from modulos.animales import submenu_animales
+from modulos.animales import submenu_animales, animales
 from modulos.adoptantes import submenu_adoptantes
 from modulos.adopciones import submenu_adopciones
 from modulos.atencion_veterinaria import submenu_atencion_veterinaria
 from modulos.voluntarios_donantes import submenu_voluntarios_donantes
 
-def menu_principal():
+def menu_principal(animales):
     while True:
         print("\n" + "═"*51)
         print("  🐾 REFUGIO PATITAS DEL LITORAL")
@@ -26,7 +26,7 @@ def menu_principal():
         elif opcion == "3":
             submenu_adopciones()
         elif opcion == "4":
-            submenu_atencion_veterinaria()
+            submenu_atencion_veterinaria(animales)
         elif opcion == "5":
             submenu_voluntarios_donantes()
         elif opcion == "0":
@@ -36,4 +36,4 @@ def menu_principal():
             print("  Opción no válida. Probá de nuevo. 🐾")
 
 if __name__ == "__main__":
-    menu_principal()
+    menu_principal(animales)

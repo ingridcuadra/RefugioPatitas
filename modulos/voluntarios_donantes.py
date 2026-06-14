@@ -2,6 +2,7 @@ from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
 from utils.validaciones import incrementar_id, confirmar, validar_id_seleccionado, validar_telefono
 from datetime import date
+from modulos.animales import animales
 
 colaboradores = []
 TIPO_DE_APORTE= ("voluntario","donante","ambas")
@@ -20,9 +21,10 @@ def submenu_voluntarios_donantes():
         print("  5. Modificar fecha del ultimo aporte")
         print("  6. Registrar colaboración ")
         print("  7. Eliminar a un colaborador")
+        print("  8. Registrar rescate")
         print("  9. Volver al menú principal")
 
-        opcion = elegir_opcion({"1", "2", "3", "4", "5","6","7", "9"})
+        opcion = elegir_opcion({"1", "2", "3", "4", "5","6","7", "8", "9"})
         if opcion == "1":
            registrar_colaborador()
         elif opcion == "2":
@@ -37,6 +39,8 @@ def submenu_voluntarios_donantes():
             registrar_colaboracion()
         elif opcion == "7":
             eliminar_colaborador()
+        elif opcion == "8":
+            registrar_rescate()
         elif opcion == "9":
             break
 
@@ -80,7 +84,8 @@ def registrar_colaborador():
     "tipo_aporte": tipo_aporte,
     "tipo_tarea": tipo_tarea,
     "fecha_ultimo_aporte": fecha_ultimo_aporte, #por default es la fecha de hoy, si se quiere modificar es el boton  5 del menu
-    "cantidad_colaboraciones": 1
+    "cantidad_colaboraciones": 1,
+    "rescates": []
     }
     colaboradores.append(colaborador)
     print(f"\n✅ Colaborador registrado")
@@ -95,6 +100,7 @@ def mostrar_colaborador(colaborador):
     print(f"Tipo de tarea: {colaborador['tipo_tarea']}")
     print(f"Fecha del último aporte: {colaborador['fecha_ultimo_aporte']}")
     print(f"Colaboraciones realizadas:{colaborador['cantidad_colaboraciones']}")
+    print(f"Animales rescatados: {colaborador['rescates']}")
 
 def listar_colaboradores():
     formatear_titulo("LISTADO DE COLABORADORES")
@@ -220,3 +226,33 @@ def eliminar_colaborador():
             print("Operación cancelada.")
 
     agregar_separador()
+
+def registrar_rescate():
+    formatear_titulo("REGISTRAR RESCATE")
+    resultados = buscar_por_nombre_o_tarea()
+
+    if not resultados:
+        print("No existe colaborador.")
+        return
+
+    colaborador = resultados[0]
+    id_animal = validar_id_seleccionado("ID del animal rescatado: ",1)
+
+    animal_existe = False #inicializo en false, si el animal existe agrega en rescates de colaborador, el id del animal.
+    for animal in animales:
+        if animal["id"] == id_animal:
+            animal_existe = True
+            break
+
+
+    if not animal_existe:
+        print("❌ No existe un animal con ese ID.")
+        return
+
+    if id_animal in colaborador["rescates"]: #si el id ingresado es igual al id que esta en rescates de un colaborar, ya existia.
+        print("⚠ Este animal ya está asociado a este colaborador.")
+        return
+
+
+    colaborador["rescates"].append(id_animal)
+    print(f"✅ {colaborador['nombre']} asociado al rescate del animal #{id_animal}")

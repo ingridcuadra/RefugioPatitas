@@ -36,7 +36,7 @@ def pedir_fecha(mensaje="Fecha"):
 
 
 def confirmar(mensaje):
-    while True:
+    while True: #va a preguntar hasta que el usuario ingrese una respuesta valida
         respuesta = input(f"{mensaje} (s/n): ").strip().lower()
         if respuesta in ("s", "n"):
             return respuesta == "s"

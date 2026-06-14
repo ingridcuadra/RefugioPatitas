@@ -4,11 +4,7 @@ from utils.navegar_menu import elegir_opcion
 
 adoptantes = []
 
-TIPOS_VIVIENDA = (
-    "casa_con_patio",
-    "departamento",
-    "casa_sin_patio"
-)
+TIPOS_VIVIENDA = ("casa_con_patio", "departamento", "casa_sin_patio")
 
 def submenu_adoptantes():
     while True:
@@ -84,12 +80,12 @@ def registrar_familia():
 def mostrar_adoptante(adoptante):
     agregar_separador()
 
-    print(f"ID #{adoptante['id']} | "f"{adoptante['nombre']}")
+    print(f"ID #{adoptante['id']} | {adoptante['nombre']}")
     print(f"DNI: {adoptante['dni']}")
     print(f"Teléfono: {adoptante['telefono']}")
     print(f"Email: {adoptante['email']}")
-    print(f"Vivienda: "f"{adoptante['tipo_vivienda']}")
-    print(f"Otras mascotas: "f"{'Sí' if adoptante['otras_mascotas'] else 'No'}")
+    print(f"Vivienda: {adoptante['tipo_vivienda']}")
+    print(f"Otras mascotas: {'Sí' if adoptante['otras_mascotas'] else 'No'}")
 
 
 def listar_adoptantes():

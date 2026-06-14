@@ -1,6 +1,7 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
 from utils.validaciones import incrementar_id, validar_id_seleccionado, pedir_fecha, confirmar
+from modulos.atencion_veterinaria import obtener_historial_animal
 
 animales = []
 
@@ -66,6 +67,21 @@ def mostrar_animal(animal):
     print(f"Estado: {animal['estado']}")
     print("Fecha ingreso:",animal["fecha_ingreso"].strftime("%d/%m/%Y"))
     print(f"Historia: {animal['historia']}")
+
+    #mostrar el historial veterinario del animal si es que lo tiene
+    
+    historial = obtener_historial_animal(animal["id"])
+    print("\nHistorial veterinario:")
+
+    if not historial:
+        print("Sin atenciones registradas.")
+    else:
+        for atencion in historial:
+            print(
+                f"- {atencion['fecha'].strftime('%d/%m/%Y')} "
+                f"| {atencion['tipo']} "
+                f"| {atencion['observaciones']}"
+            )
 
 def listar_animales():
     formatear_titulo("LISTADO DE ANIMALES")

@@ -1,14 +1,13 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
 from utils.validaciones import incrementar_id, confirmar, validar_id_seleccionado
-from modulos.animales import animales
 from datetime import date
 
 
 atenciones = []
 TIPOS_ATENCION = ("vacuna","desparasitacion","control", "cirugia", "otro")
 
-def submenu_atencion_veterinaria():
+def submenu_atencion_veterinaria(animales):
     while True:
         formatear_titulo("ATENCION VETERINARIA")
 
@@ -22,22 +21,22 @@ def submenu_atencion_veterinaria():
 
         opcion = elegir_opcion({"1", "2", "3", "4", "5","6", "9"})
         if opcion == "1":
-            registrar_atencion()
+            registrar_atencion(animales)
         elif opcion == "2":
-            listar_atenciones()
+            listar_atenciones(animales)
         elif opcion == "3":
-            buscar_atencion_por_animal()
+            buscar_atencion_por_animal(animales)
         elif opcion == "4":
-            buscar_atencion_por_tipo()
+            buscar_atencion_por_tipo(animales)
         elif opcion == "5":
-            actualizar_atencion()
+            actualizar_atencion(animales)
         elif opcion == "6":
-            eliminar_atencion()
+            eliminar_atencion(animales)
         elif opcion == "9":
             break
 
 
-def registrar_atencion():
+def registrar_atencion(animales):
     formatear_titulo("NUEVA ATENCION")
 
     id_animal = int(input("Ingrese ID del animal: "))
@@ -71,11 +70,10 @@ def registrar_atencion():
     }
 
     atenciones.append(atencion)
-    #print(atenciones) sirve para el debugg, prueba
     print(f"\n✅ Atención registrada con ID #{atencion['id']}")
 
 
-def mostrar_atencion(atencion):
+def mostrar_atencion(atencion, animales):
     agregar_separador()
 
     nombre_animal = ""
@@ -87,12 +85,13 @@ def mostrar_atencion(atencion):
 
     print(f"ID: {atencion['id']}")
     print(f"Animal: {nombre_animal}")
+    print(f"ID Animal: {animal["id"]}")
     print("Fecha:", atencion["fecha"].strftime("%d/%m/%Y"))
     print(f"Tipo: {atencion['tipo']}")
     print(f"Observaciones: {atencion['observaciones']}")
 
 
-def listar_atenciones():
+def listar_atenciones(animales):
     formatear_titulo("LISTADO DE ATENCIONES")
 
     if not atenciones:
@@ -100,7 +99,7 @@ def listar_atenciones():
         return
     
     for atencion in atenciones:
-        mostrar_atencion(atencion)
+        mostrar_atencion(atencion, animales)
 
     agregar_separador()
     print(f"total {len(atenciones)} atencion/es registradas.")
@@ -118,7 +117,7 @@ def buscar_por_id_animal():
 
     return resultados
 
-def buscar_atencion_por_animal():
+def buscar_atencion_por_animal(animales):
     formatear_titulo("BUSCAR ATENCION POR ANIMAL")
     resultados = buscar_por_id_animal()
 
@@ -126,7 +125,7 @@ def buscar_atencion_por_animal():
         print("No se encontraron atenciones para ese animal")
 
     for atencion in resultados:
-        mostrar_atencion(atencion)
+        mostrar_atencion(atencion, animales)
 
     agregar_separador()
 
@@ -147,7 +146,7 @@ def buscar_por_tipo():
 
     return resultados
 
-def buscar_atencion_por_tipo():
+def buscar_atencion_por_tipo(animales):
     resultados = buscar_por_tipo()
 
     if not resultados:
@@ -155,13 +154,13 @@ def buscar_atencion_por_tipo():
         return
 
     for atencion in resultados:
-        mostrar_atencion(atencion)
+        mostrar_atencion(atencion, animales)
 
     
     return resultados
 
 
-def actualizar_atencion():
+def actualizar_atencion(animales):
     formatear_titulo("ACTUALIZAR ATENCION")
 
     id_atencion = validar_id_seleccionado("Ingrese ID de la atención a modificar: ")
@@ -177,7 +176,7 @@ def actualizar_atencion():
         print("No se encontró una atencion con ese ID.")
         return
 
-    mostrar_atencion(atencion_encontrada)
+    mostrar_atencion(atencion_encontrada, animales)
 
     print("Tipos disponibles: 1) Vacuna 2) Desparasitación 3) Control 4) Cirugia 5) Otro")
     idx = validar_id_seleccionado("Elegí (1-5): ",1,5)
@@ -191,17 +190,27 @@ def actualizar_atencion():
 
     print("\n✅ Atención actualizada.")
 
+#atencion veterinaria conectada a animal
+def obtener_historial_animal(id_animal):
+    historial = [
+        atencion
+        for atencion in atenciones
+        if atencion["id_animal"] == id_animal
+    ]
 
+    return historial
 
-
-def eliminar_atencion():
+def eliminar_atencion(animales):
     formatear_titulo("ELIMINAR ATENCION")
-    resultados = buscar_por_id_animal()
-    if not resultados:
-            print("No se encontró ninguna atencion.")
+    id_atencion = validar_id_seleccionado("Ingrese ID de la atención: ",1)
+
+    for atencion in atenciones:
+        if atencion["id"] == id_atencion:
+            mostrar_atencion(atencion, animales)
+            if confirmar("¿Eliminar atención?"):
+                atenciones.remove(atencion)
+                print("✅ Atención eliminada.")
+
             return
-    for atencion in resultados:
-        mostrar_atencion(atencion)
-        if confirmar(f"¿Eliminar a #{atencion['id']}?"):
-            atenciones.remove(atencion)
-            print("✅ Atención eliminada.")
+
+    print("No existe esa atención.")
