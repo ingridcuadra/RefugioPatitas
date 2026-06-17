@@ -1,6 +1,6 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
-from utils.validaciones import incrementar_id, confirmar, validar_id_seleccionado
+from utils.validaciones import incrementar_id, confirmar_accion, validar_numero_seleccionado
 from datetime import date
 
 
@@ -54,7 +54,7 @@ def registrar_atencion(animales):
     #prints de opciones de tipo de atencion
     print("Tipo de atención: 1) vacuna  2) desparasitacion 3) control 4) cirugia 5) otro")
 
-    idx = validar_id_seleccionado("Elegí (1-5): ", 1,5)
+    idx = validar_numero_seleccionado("Elegí (1-5): ", 1,5)
     tipo = TIPOS_ATENCION[idx - 1]
     
     observaciones = input("observaciones de la veterinaria: ").strip()
@@ -107,7 +107,7 @@ def listar_atenciones(animales):
 
 
 def buscar_por_id_animal():
-    id_animal = validar_id_seleccionado("Ingrese ID del animal:", 1)
+    id_animal = validar_numero_seleccionado("Ingrese ID del animal:", 1)
 
     resultados = [
         atencion
@@ -135,7 +135,7 @@ def buscar_por_tipo():
     formatear_titulo("BUSCAR ATENCION POR TIPO")
 
     print("Tipo de atención: 1) vacuna 2) desparasitacion 3) control 4) cirugia 5) otro")
-    idx = validar_id_seleccionado("Elegí (1-5): ", 1, 5)
+    idx = validar_numero_seleccionado("Elegí (1-5): ", 1, 5)
     tipo = TIPOS_ATENCION[idx - 1]
 
     resultados = [
@@ -163,7 +163,7 @@ def buscar_atencion_por_tipo(animales):
 def actualizar_atencion(animales):
     formatear_titulo("ACTUALIZAR ATENCION")
 
-    id_atencion = validar_id_seleccionado("Ingrese ID de la atención a modificar: ")
+    id_atencion = validar_numero_seleccionado("Ingrese ID de la atención a modificar: ")
 
     atencion_encontrada = None
 
@@ -179,7 +179,7 @@ def actualizar_atencion(animales):
     mostrar_atencion(atencion_encontrada, animales)
 
     print("Tipos disponibles: 1) Vacuna 2) Desparasitación 3) Control 4) Cirugia 5) Otro")
-    idx = validar_id_seleccionado("Elegí (1-5): ",1,5)
+    idx = validar_numero_seleccionado("Elegí (1-5): ",1,5)
 
     atencion_encontrada["tipo"] = TIPOS_ATENCION[idx - 1]
 
@@ -202,12 +202,12 @@ def obtener_historial_animal(id_animal):
 
 def eliminar_atencion(animales):
     formatear_titulo("ELIMINAR ATENCION")
-    id_atencion = validar_id_seleccionado("Ingrese ID de la atención: ",1)
+    id_atencion = validar_numero_seleccionado("Ingrese ID de la atención: ",1)
 
     for atencion in atenciones:
         if atencion["id"] == id_atencion:
             mostrar_atencion(atencion, animales)
-            if confirmar("¿Eliminar atención?"):
+            if confirmar_accion("¿Eliminar atención?"):
                 atenciones.remove(atencion)
                 print("✅ Atención eliminada.")
 

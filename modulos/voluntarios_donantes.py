@@ -1,10 +1,13 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
-from utils.validaciones import incrementar_id, confirmar, validar_id_seleccionado, validar_telefono
+from utils.validaciones import incrementar_id, confirmar_accion, validar_numero_seleccionado, validar_telefono
 from datetime import date
 from modulos.animales import animales
+from utils.funciones import leer_registros, guardar_registro
 
-colaboradores = []
+archivo_colaboradores = "archivos/colaboradores.json"
+colaboradores = leer_registros(archivo_colaboradores)
+
 TIPO_DE_APORTE= ("voluntario","donante","ambas")
 TIPO_DE_TAREA= ("paseador de perros","alimento balanceado","atencion veterinaria gratuita", "otro")
 
@@ -51,29 +54,25 @@ def registrar_colaborador():
     nombre = input("Nombre completo: ").strip()
     telefono = validar_telefono()
 
-    # verificar si ya existe
+    # verificar si ya existe    
     for colaborador in colaboradores:
         if colaborador["nombre"].lower() == nombre.lower() and colaborador["telefono"] == telefono:
-            colaborador["cantidad_colaboraciones"] += 1
-            colaborador["fecha_ultimo_aporte"] = date.today().strftime("%Y-%m-%d")
-
-            print(
-                f"\n✅ Ya existía {colaborador['nombre']}. "
-                f"Se agregó una nueva colaboración."
-            )
-            return
+            print(f"\n⚠ Ya existe un colaborador registrado con ese nombre y teléfono: {colaborador['nombre']}."
+)
+        print("Para registrar una nueva colaboración utilizá la opción 6 del menú.")
+        return
 
 
     fecha_ultimo_aporte = date.today().strftime("%Y-%m-%d")
 
     print("\nTipo de aporte:")
     print("1) Voluntario 2) Donante 3) Ambas")
-    idx = validar_id_seleccionado("Elegí (1-3): ", 1, 3)
+    idx = validar_numero_seleccionado("Elegí (1-3): ", 1, 3)
     tipo_aporte = TIPO_DE_APORTE[(idx)-1]
 
     print("\nQué tarea hace o que recurso aporta:")
     print("1) Paseador de perros 2) Alimento Balanceado 3) Atención veterinaria gratuita 4) Otro")
-    idx = validar_id_seleccionado("Elegí (1-4): ", 1, 4)
+    idx = validar_numero_seleccionado("Elegí (1-4): ", 1, 4)
     tipo_tarea = TIPO_DE_TAREA[(idx)-1]
 
 
@@ -88,6 +87,7 @@ def registrar_colaborador():
     "rescates": []
     }
     colaboradores.append(colaborador)
+    guardar_registro(archivo_colaboradores, colaboradores)
     print(f"\n✅ Colaborador registrado")
 
 
@@ -149,7 +149,7 @@ def buscar_por_tipo_aporte():
     formatear_titulo("BUSCAR COLABORADOR POR TIPO DE APORTE")
 
     print("Tipo de aporte: 1) Voluntario 2) Donante 3) Ambos ")
-    idx = validar_id_seleccionado("Elegí (1-3): ", 1, 3)
+    idx = validar_numero_seleccionado("Elegí (1-3): ", 1, 3)
     tipo = TIPO_DE_APORTE[idx - 1]
 
     resultados = [
@@ -190,6 +190,9 @@ def actualizar_fecha_ultimo_aporte():
     colaborador["fecha_ultimo_aporte"] = nueva_fecha
     print(f"✅ Fecha del ultimo aporte actualizada a {nueva_fecha}.")
 
+    guardar_registro(archivo_colaboradores, colaboradores)
+
+
 
 def registrar_colaboracion():
     formatear_titulo("REGISTRAR COLABORACIÓN")
@@ -202,13 +205,22 @@ def registrar_colaboracion():
     
     colaborador = resultados[0]
 
-    colaborador["cantidad_colaboraciones"] += 1
-    colaborador["fecha_ultimo_aporte"] = date.today()
+    print("\nQué tarea hace o qué recurso aporta:")
+    print("1) Paseador de perros")
+    print("2) Alimento balanceado")
+    print("3) Atención veterinaria gratuita")
+    print("4) Otro")
 
-    print(
-        f"✅ {colaborador['nombre']} ahora tiene "
-        f"{colaborador['cantidad_colaboraciones']} colaboraciones."
-    )
+    idx = validar_numero_seleccionado("Elegí (1-4): ", 1, 4)
+    colaborador["tipo_tarea"] = TIPO_DE_TAREA[idx - 1]
+
+
+    colaborador["cantidad_colaboraciones"] += 1
+    colaborador["fecha_ultimo_aporte"] = date.today().strftime("%Y-%m-%d")
+
+    guardar_registro(archivo_colaboradores, colaboradores)
+    print(f"✅ Nueva colaboración registrada para {colaborador['nombre']}.")
+
 
 def eliminar_colaborador():
     formatear_titulo("DAR DE BAJA COLABORADOR")
@@ -219,13 +231,15 @@ def eliminar_colaborador():
     for colaborador in resultados:
         mostrar_colaborador(colaborador)
 
-        if confirmar(f"¿Dar de baja a {colaborador['nombre']}?"):
+        if confirmar_accion(f"¿Dar de baja a {colaborador['nombre']}?"):
             colaboradores.remove(colaborador)
+            guardar_registro(archivo_colaboradores, colaboradores)
             print("✅ Colaborador eliminado.")
         else:
             print("Operación cancelada.")
 
     agregar_separador()
+
 
 def registrar_rescate():
     formatear_titulo("REGISTRAR RESCATE")
@@ -236,7 +250,7 @@ def registrar_rescate():
         return
 
     colaborador = resultados[0]
-    id_animal = validar_id_seleccionado("ID del animal rescatado: ",1)
+    id_animal = validar_numero_seleccionado("ID del animal rescatado: ",1)
 
     animal_existe = False #inicializo en false, si el animal existe agrega en rescates de colaborador, el id del animal.
     for animal in animales:

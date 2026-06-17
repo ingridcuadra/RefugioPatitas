@@ -1,4 +1,5 @@
 from datetime import date
+import json, os
 
 
 def incrementar_id(lista):
@@ -9,7 +10,7 @@ def incrementar_id(lista):
 
 
 # validad que el input sea un numero entero y que este dentro de un rango de minimo y maximo
-def validar_id_seleccionado(mensaje, minimo=None, maximo=None):
+def validar_numero_seleccionado(mensaje, minimo=None, maximo=None):
     while True:
         texto = input(mensaje).strip()
         if texto.isdigit():
@@ -23,25 +24,6 @@ def validar_id_seleccionado(mensaje, minimo=None, maximo=None):
             return valor
         print("  ⚠  Eso no es un número válido. Intentá de nuevo.")
 
-
-
-def pedir_fecha(mensaje="Fecha"):
-    print(f"\n{mensaje}")
-
-    dia = validar_id_seleccionado("Día: ", 1, 31)
-    mes = validar_id_seleccionado("Mes: ", 1, 12)
-    anio = validar_id_seleccionado("Año: ", 2000)
-
-    return date(anio, mes, dia)
-
-
-def confirmar(mensaje):
-    while True: #va a preguntar hasta que el usuario ingrese una respuesta valida
-        respuesta = input(f"{mensaje} (s/n): ").strip().lower()
-        if respuesta in ("s", "n"):
-            return respuesta == "s"
-
-        print("⚠ Ingresá 's' o 'n'.")
 
 def validar_email():
     while True:
@@ -61,3 +43,33 @@ def validar_telefono():
             return telefono
 
         print("⚠ Ingresá un teléfono válido.")
+
+
+
+def confirmar_accion(mensaje):
+    while True:
+        respuesta = input(f"{mensaje} (Si/No): ").strip().lower()
+
+        if respuesta in ("si", "no"):
+            return respuesta == "si"
+
+        print("⚠ Ingresá 'Si' o 'No'.")
+
+
+def pedir_fecha(mensaje="Fecha"):
+    print(f"\n{mensaje}")
+
+    dia = validar_numero_seleccionado("Día: ", 1, 31)
+    mes = validar_numero_seleccionado("Mes: ", 1, 12)
+    anio = validar_numero_seleccionado("Año: ", 2000)
+
+    return date(anio, mes, dia)
+
+# Retorna el modo correcto según si existe el archivo o no
+def validar_archivo_existe(archivo):
+    if not os.path.exists(archivo):
+        return True
+    else: 
+        return False
+
+

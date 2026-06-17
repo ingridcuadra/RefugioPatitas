@@ -1,10 +1,16 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
-from utils.validaciones import incrementar_id, confirmar, validar_id_seleccionado, validar_email, validar_telefono
+from utils.validaciones import incrementar_id, confirmar_accion, validar_numero_seleccionado, validar_email, validar_telefono
 from utils.navegar_menu import elegir_opcion
+from utils.funciones import leer_registros, guardar_registro
 
-adoptantes = []
+
+ARCHIVO_ADOPTANTES_RUTA = "archivos/adoptantes.json"
+adoptantes = leer_registros(ARCHIVO_ADOPTANTES_RUTA)
 
 TIPOS_VIVIENDA = ("casa_con_patio", "departamento", "casa_sin_patio")
+
+def leer_adoptantes():
+    return leer_registros(ARCHIVO_ADOPTANTES_RUTA)
 
 def submenu_adoptantes():
     while True:
@@ -50,7 +56,7 @@ def registrar_familia():
 
     print("\nTipo de vivienda:")
     print("1) Casa con patio 2) Departamento 3) Casa sin patio")
-    idx = validar_id_seleccionado("Elegí (1-3): ", 1, 3)
+    idx = validar_numero_seleccionado("Elegí (1-3): ", 1, 3)
     vivienda = TIPOS_VIVIENDA[(idx)-1]
 
     while True:
@@ -74,6 +80,7 @@ def registrar_familia():
     "otras_mascotas": otras_mascotas
     }
     adoptantes.append(adoptante)
+    guardar_registro(ARCHIVO_ADOPTANTES_RUTA, adoptantes)
     print(f"\n✅ Familia registrada con ID #{adoptante['id']}")
 
 
@@ -171,6 +178,7 @@ def eliminar_familia():
             print("No se encontró ninguna familia.")
             return
     for adoptante in resultados:
-        if confirmar(f"¿Eliminar a {adoptante['nombre']}?"):
+        if confirmar_accion(f"¿Eliminar a {adoptante['nombre']}?"):
             adoptantes.remove(adoptante)
+            guardar_registro(ARCHIVO_ADOPTANTES_RUTA, adoptantes)
             print("✅ Familia eliminada.")

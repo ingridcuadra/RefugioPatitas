@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "nombre": "Pepito",
+        "especie": "gato",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "01/06/2024",
+        "estado": "adoptado",
+        "historia": "test"
+    },
+    {
+        "id": 2,
+        "nombre": "Pepito 2",
+        "especie": "gato",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "02/06/2026",
+        "estado": "adoptado",
+        "historia": "bien"
+    },
+    {
+        "id": 3,
+        "nombre": "Luna",
+        "especie": "perro",
+        "edad_aproximada": 2,
+        "fecha_ingreso": "03/04/2026",
+        "estado": "adoptado",
+        "historia": "muy bien"
+    },
+    {
+        "id": 4,
+        "nombre": "Prueba",
+        "especie": "perro",
+        "edad_aproximada": 1,
+        "fecha_ingreso": "01/01/2001",
+        "estado": "adoptado",
+        "historia": "hola"
+    },
+    {
+        "id": 5,
+        "nombre": "Jorge",
+        "especie": "otro",
+        "edad_aproximada": 3,
+        "fecha_ingreso": "03/04/2026",
+        "estado": "en_refugio",
+        "historia": "bien"
+    },
+    {
+        "id": 6,
+        "nombre": "prubea test",
+        "especie": "perro",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "03/04/2026",
+        "estado": "en_refugio",
+        "historia": "bien"
+    },
+    {
+        "id": 7,
+        "nombre": "tito",
+        "especie": "perro",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "12/12/2018",
+        "estado": "en_adopcion",
+        "historia": "prubea TEST"
+    },
+    {
+        "id": 8,
+        "nombre": "tito",
+        "especie": "perro",
+        "edad_aproximada": 5,
+        "fecha_ingreso": "12/12/2018",
+        "estado": "en_refugio",
+        "historia": "PRUEBA TEST"
+    }
+]

@@ -1,12 +1,18 @@
 from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
-from utils.validaciones import incrementar_id, validar_id_seleccionado, pedir_fecha, confirmar
 from modulos.atencion_veterinaria import obtener_historial_animal
+from utils.validaciones import incrementar_id, validar_numero_seleccionado, confirmar_accion
+from utils.funciones import leer_registros, guardar_registro, pedir_fecha, encontrar_registro_por_id
 
-animales = []
 
 ESTADOS_ANIMAL = ("en_refugio", "en_adopcion", "adoptado")
+ARCHIVO_ANIMALES_RUTA = "archivos/animales.json"
+animales = leer_registros(ARCHIVO_ANIMALES_RUTA)
 ESPECIES = ("perro", "gato", "otro")
+
+
+def leer_animales():
+    return leer_registros(ARCHIVO_ANIMALES_RUTA)
 
 def submenu_animales():
     while True:
@@ -38,10 +44,10 @@ def cargar_animal():
     
     print("\nEspecies disponibles:")
     print("Especie: 1) perro  2) gato  3) otro")
-    idx = validar_id_seleccionado("Elegí (1-3): ", 1, 3)
+    idx = validar_numero_seleccionado("Elegí (1-3): ", 1, 3)
     especie = ESPECIES[idx - 1]
 
-    edad = validar_id_seleccionado("Edad aproximada (años): ", 0) # Valida que el usuario ingrese un número entero y que esté dentro del rango permitido.
+    edad = validar_numero_seleccionado("Edad aproximada (años): ", 0) # Valida que el usuario ingrese un número entero y que esté dentro del rango permitido.
     fecha_ingreso = pedir_fecha("Fecha de ingreso")
     historia = input("Historia de cómo llegó: ").strip()
 
@@ -56,6 +62,7 @@ def cargar_animal():
     }
 
     animales.append(animal)
+    guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
     print(f"\n✅ {nombre} fue registrado con ID #{animal['id']}")
 
 
@@ -65,7 +72,7 @@ def mostrar_animal(animal):
     print(f"ID #{animal['id']} | {animal['nombre']} ({animal['especie']})")
     print(f"Edad: {animal['edad_aproximada']} años")
     print(f"Estado: {animal['estado']}")
-    print("Fecha ingreso:",animal["fecha_ingreso"].strftime("%d/%m/%Y"))
+    print("Fecha ingreso:", animal["fecha_ingreso"])
     print(f"Historia: {animal['historia']}")
 
     #mostrar el historial veterinario del animal si es que lo tiene
@@ -158,6 +165,9 @@ def modificar_estado_animal():
         print(f"Cambiando estado de #{animal['nombre']} de '{animal['estado']}' a '{nuevo_estado}'")
         animal["estado"] = nuevo_estado
 
+    guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
+
+
 
 def eliminar_animal():
     formatear_titulo("ELIMINAR ANIMAL")
@@ -167,6 +177,24 @@ def eliminar_animal():
             return
     for animal in resultados:
         mostrar_animal(animal)
-        if confirmar(f"¿Eliminar a #{animal['nombre']}?"):
+        if confirmar_accion(f"¿Eliminar a #{animal['nombre']}?"):
             animales.remove(animal)
+            guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
             print("✅ Animal eliminado.")
+
+
+#prueba para que funcione el modulo de ingrid
+
+def cambiar_estado_animal(id_animal, index_estado):
+    animales = leer_animales()
+
+    if id_animal is None:
+        return
+    
+    if index_estado is None:
+        return
+    
+    animal = encontrar_registro_por_id(id_animal, animales)
+    animal["estado"] = ESTADOS_ANIMAL[index_estado]
+
+    guardar_registro(ARCHIVO_ANIMALES_RUTA, animales)
