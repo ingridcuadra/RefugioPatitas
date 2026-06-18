@@ -64,5 +64,38 @@
             }
         ],
         "estado": "Revertida"
+    },
+    {
+        "id": 8,
+        "id_animal": 7,
+        "id_adoptante": 1,
+        "fecha_adopcion": "17/06/2026",
+        "seguimientos": [
+            {
+                "fecha_seguimiento": "17/06/2026",
+                "nota_seguimiento": "Tito se porta muy bien"
+            },
+            {
+                "fecha_seguimiento": "17/06/2026",
+                "nota_seguimiento": "Esto es una prueba"
+            }
+        ],
+        "estado": "Activa"
+    },
+    {
+        "id": 9,
+        "id_animal": 10,
+        "id_adoptante": 3,
+        "fecha_adopcion": "17/06/2026",
+        "seguimientos": [],
+        "estado": "Activa"
+    },
+    {
+        "id": 10,
+        "id_animal": 9,
+        "id_adoptante": 3,
+        "fecha_adopcion": "17/06/2026",
+        "seguimientos": [],
+        "estado": "Revertida"
     }
 ]

@@ -3,6 +3,7 @@ from modulos.adoptantes import submenu_adoptantes
 from modulos.adopciones import submenu_adopciones
 from modulos.atencion_veterinaria import submenu_atencion_veterinaria
 from modulos.voluntarios_donantes import submenu_voluntarios_donantes
+from utils.navegar_menu import elegir_opcion
 
 def menu_principal(animales):
     while True:
@@ -17,23 +18,22 @@ def menu_principal(animales):
         print("  0. Salir")
         print("═"*51)
         
-        opcion = input("¿Qué querés hacer? ").strip()
-        
-        if opcion == "1":
-            submenu_animales()
-        elif opcion == "2":
-            submenu_adoptantes()
-        elif opcion == "3":
-            submenu_adopciones()
-        elif opcion == "4":
-            submenu_atencion_veterinaria(animales)
-        elif opcion == "5":
-            submenu_voluntarios_donantes()
-        elif opcion == "0":
-            print("Salir")
-            break
-        else:
-            print("  Opción no válida. Probá de nuevo. 🐾")
+        opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5", "0"})
+
+        match opcion:
+            case "1":
+                submenu_animales()
+            case "2":
+                submenu_adoptantes()
+            case "3":
+                submenu_adopciones()
+            case "4":
+                submenu_atencion_veterinaria(animales)
+            case "5":
+                submenu_voluntarios_donantes()
+            case "0":
+                print("¡Hasta pronto! 🐾")
+                break
 
 if __name__ == "__main__":
     menu_principal(animales)

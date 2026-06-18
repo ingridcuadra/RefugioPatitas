@@ -16,13 +16,13 @@ def validar_numero_seleccionado(mensaje, minimo=None, maximo=None):
         if texto.isdigit():
             valor = int(texto)
             if minimo is not None and valor < minimo:
-                print(f"  ⚠  Ingresá un número mayor o igual a {minimo}.")
+                print(f"⚠️ Ingresá un número mayor o igual a {minimo}.")
                 continue
             if maximo is not None and valor > maximo:
-                print(f"  ⚠  Ingresá un número menor o igual a {maximo}.")
+                print(f"⚠️ Ingresá un número menor o igual a {maximo}.")
                 continue
             return valor
-        print("  ⚠  Eso no es un número válido. Intentá de nuevo.")
+        print("⚠️ Eso no es un número válido. Intentá de nuevo.")
 
 
 def validar_email():
@@ -32,7 +32,7 @@ def validar_email():
         if "@" in email and "." in email:
             return email
 
-        print("⚠ Ingresá un email válido.")
+        print("⚠️ Ingresá un email válido.")
 
 
 def validar_telefono():
@@ -42,7 +42,7 @@ def validar_telefono():
         if telefono.isdigit() and len(telefono) >= 8:
             return telefono
 
-        print("⚠ Ingresá un teléfono válido.")
+        print("⚠️ Ingresá un teléfono válido.")
 
 
 
@@ -53,7 +53,7 @@ def confirmar_accion(mensaje):
         if respuesta in ("si", "no"):
             return respuesta == "si"
 
-        print("⚠ Ingresá 'Si' o 'No'.")
+        print("⚠️ Ingresá 'Si' o 'No'.")
 
 
 def pedir_fecha(mensaje="Fecha"):

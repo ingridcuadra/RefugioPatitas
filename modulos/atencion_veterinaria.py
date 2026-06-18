@@ -19,7 +19,7 @@ def submenu_atencion_veterinaria(animales):
         print("  6. Eliminar una atencion")
         print("  9. Volver al menú principal")
 
-        opcion = elegir_opcion({"1", "2", "3", "4", "5","6", "9"})
+        opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5","6", "9"})
         if opcion == "1":
             registrar_atencion(animales)
         elif opcion == "2":

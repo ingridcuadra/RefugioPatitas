@@ -1,1 +1,52 @@
-[]
+[
+    {
+        "id": 1,
+        "nombre": "Persona Prueba",
+        "telefono": "11992233",
+        "tipo_aporte": "ambas",
+        "tipo_tarea": "paseador de perros",
+        "fecha_ultimo_aporte": "2026-06-17",
+        "cantidad_colaboraciones": 2,
+        "rescates": []
+    },
+    {
+        "id": 2,
+        "nombre": "pepito suarez",
+        "telefono": "212211122",
+        "tipo_aporte": "donante",
+        "tipo_tarea": "paseador de perros",
+        "fecha_ultimo_aporte": "2026-06-17",
+        "cantidad_colaboraciones": 1,
+        "rescates": []
+    },
+    {
+        "id": 3,
+        "nombre": "ana prueba",
+        "telefono": "22112312",
+        "tipo_aporte": "voluntario",
+        "tipo_tarea": "alimento balanceado",
+        "fecha_ultimo_aporte": "2026-06-17",
+        "cantidad_colaboraciones": 1,
+        "rescates": []
+    },
+    {
+        "id": 5,
+        "nombre": "juan",
+        "telefono": "111111111",
+        "tipo_aporte": "voluntario",
+        "tipo_tarea": "paseador de perros",
+        "fecha_ultimo_aporte": "2026-06-17",
+        "cantidad_colaboraciones": 1,
+        "rescates": []
+    },
+    {
+        "id": 6,
+        "nombre": "enzo",
+        "telefono": "11112222",
+        "tipo_aporte": "donante",
+        "tipo_tarea": "alimento balanceado",
+        "fecha_ultimo_aporte": "2026-06-17",
+        "cantidad_colaboraciones": 1,
+        "rescates": []
+    }
+]

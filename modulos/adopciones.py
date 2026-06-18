@@ -2,15 +2,12 @@ from utils.formatear_texto import formatear_titulo, agregar_separador
 from utils.navegar_menu import elegir_opcion
 from utils.validaciones import validar_numero_seleccionado
 from utils.funciones import incrementar_id, obtener_fecha_hoy, leer_registros, guardar_registro, seleccionar_por_id
-from modulos.animales import leer_animales, cambiar_estado_animal
-from modulos.adoptantes import leer_adoptantes
+from modulos.animales import animales, cambiar_estado_animal
+from modulos.adoptantes import adoptantes
 
-#cambios, el submenu funciona con elegir opcion, en su rama tenia mensaje y opcion, en la mia solo opcion si se borra el msj funciona
 ARCHIVO_ADOPCIONES_RUTA = "archivos/adopciones.json"
 ESTADOS_ADOPCION = ("Activa", "Revertida")
-
-def leer_adopciones():
-    return leer_registros(ARCHIVO_ADOPCIONES_RUTA)
+adopciones = leer_registros(ARCHIVO_ADOPCIONES_RUTA)
 
 def nombre_desde_registro(registro):
     if registro is None:
@@ -22,14 +19,15 @@ def nombre_por_id(id_registro, registros):
     return nombre_desde_registro(registro)
 
 def mostrar_adopcion(adopcion):
-    nombre_animal = nombre_por_id(adopcion["id_animal"], leer_animales())
-    nombre_adoptante = nombre_por_id(adopcion["id_adoptante"], leer_adoptantes())
-    seguimientos = len(adopcion.get("seguimientos", []))
-
+    nombre_animal = nombre_por_id(adopcion["id_animal"], animales)
+    nombre_adoptante = nombre_por_id(adopcion["id_adoptante"], adoptantes)
+    cantidad_seguimientos = len(adopcion.get("seguimientos", []))
+    elementos_lista = 'nota' if cantidad_seguimientos == 1 else 'notas'
+    
     print(
         f"Adopción #{adopcion['id']} — {nombre_animal} → {nombre_adoptante} "
         f"| {adopcion['estado']} | {adopcion['fecha_adopcion']} "
-        f"| {seguimientos} nota(s) de seguimiento"
+        f"| {cantidad_seguimientos} {elementos_lista} de seguimiento."
     )
 
     for nota in adopcion.get("seguimientos", []):
@@ -57,15 +55,14 @@ def seleccionar_registro_por_id(registros, tipo):
     return registro_encontrado
 
 def registrar_adopcion():
-    adopciones = leer_adopciones()
     formatear_titulo("Registrar adopción")
 
-    adoptante = seleccionar_registro_por_id(leer_adoptantes(), "adoptantes")
+    adoptante = seleccionar_registro_por_id(adoptantes, "adoptantes")
     if adoptante is None:
         return
     
     animales_en_adopcion = [
-        a for a in leer_animales()
+        a for a in animales
         if a["estado"] == "en_adopcion"
     ]
 
@@ -93,29 +90,28 @@ def registrar_adopcion():
     cambiar_estado_animal(id_animal, 2)
 
     print(
-        f"\n¡La adopción se registró con éxito! "
-        f"{nombre_desde_registro(animal)} → {nombre_desde_registro(adoptante)}."
+        f"\n✅ ¡La adopción se registró con éxito!"
+        f"\n{nombre_desde_registro(animal)} → {nombre_desde_registro(adoptante)}."
     )
 
 def listar_adopciones():
-    adopciones = leer_adopciones()
     formatear_titulo("Lista de adopciones")
 
     if not adopciones:
-        print("No hay adopciones cargadas. Registrá una antes de listarlas.")
+        print("No hay adopciones cargadas.")
         return
     
     for adopcion in adopciones:
         mostrar_adopcion(adopcion)
 
-    print(f"\nTotal: {len(adopciones)} adopción/es.")
+    elementos_lista = 'adopción' if len(adopciones) == 1 else 'adopciones'
+    print(f"\nTotal: {len(adopciones)} {elementos_lista}.")
 
 def buscar_adopcion():
-    adopciones = leer_adopciones()
     formatear_titulo("Buscar una adopción")
 
     if not adopciones:
-        print("No hay adopciones cargadas. Registrá una antes de buscarla.")
+        print("No hay adopciones cargadas.")
         return
 
     adopcion = seleccionar_por_id(adopciones)
@@ -126,11 +122,10 @@ def buscar_adopcion():
     mostrar_adopcion(adopcion)
 
 def agregar_nota_seguimiento():
-    adopciones = leer_adopciones()
     formatear_titulo("Agregá una nota de seguimiento")
 
     if not adopciones:
-        print("Aún no hay adopciones registradas. Registrá una antes de agregar una nota.")
+        print("Aún no hay adopciones registradas. Registrá una antes de agregar una nota de seguimiento.")
         return
 
     adopcion = seleccionar_por_id(adopciones)
@@ -154,11 +149,10 @@ def agregar_nota_seguimiento():
     print(f"\n✅ Nota agregada a la adopción #{adopcion['id']}.")
 
 def revertir_adopcion():
-    adopciones = leer_adopciones()
     formatear_titulo("Revertir adopción")
 
     if not adopciones:
-        print("No hay adopciones cargadas. Registrá una antes de revertirla.")
+        print("No hay adopciones cargadas. Registrá una antes de intentar revertirla.")
         return
 
     adopcion = seleccionar_por_id(adopciones)
@@ -166,7 +160,7 @@ def revertir_adopcion():
         return
 
     if adopcion["estado"] != ESTADOS_ADOPCION[0]:
-        print("Esa adopción no está activa. No se puede revertir esta adopción.")
+        print("Esa adopción no está activa. No se puede revertir.")
         return
 
     adopcion["estado"] = ESTADOS_ADOPCION[1]
@@ -186,7 +180,7 @@ def submenu_adopciones():
         print("  4. Agregar una nota de seguimiento")
         print("  5. Revertir adopción")
         print("  9. Volver al menú principal")
-        opcion = elegir_opcion({"1", "2", "3", "4", "5", "9"}) #linea MODIFICADA
+        opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5", "9"})
         match opcion:
             case "1":
                 registrar_adopcion()

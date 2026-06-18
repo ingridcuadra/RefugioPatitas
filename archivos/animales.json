@@ -36,15 +36,6 @@
         "historia": "hola"
     },
     {
-        "id": 5,
-        "nombre": "Jorge",
-        "especie": "otro",
-        "edad_aproximada": 3,
-        "fecha_ingreso": "03/04/2026",
-        "estado": "en_refugio",
-        "historia": "bien"
-    },
-    {
         "id": 6,
         "nombre": "prubea test",
         "especie": "perro",
@@ -59,7 +50,7 @@
         "especie": "perro",
         "edad_aproximada": 5,
         "fecha_ingreso": "12/12/2018",
-        "estado": "en_adopcion",
+        "estado": "adoptado",
         "historia": "prubea TEST"
     },
     {
@@ -70,5 +61,23 @@
         "fecha_ingreso": "12/12/2018",
         "estado": "en_refugio",
         "historia": "PRUEBA TEST"
+    },
+    {
+        "id": 9,
+        "nombre": "Sol",
+        "especie": "Perro",
+        "edad_aproximada": 12,
+        "fecha_ingreso": "09/02/2026",
+        "estado": "en_adopcion",
+        "historia": "bien"
+    },
+    {
+        "id": 10,
+        "nombre": "Pepe",
+        "especie": "Gato",
+        "edad_aproximada": 2,
+        "fecha_ingreso": "01/01/2026",
+        "estado": "adoptado",
+        "historia": "muy bien"
     }
 ]

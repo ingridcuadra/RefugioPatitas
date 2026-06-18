@@ -27,7 +27,7 @@ def submenu_voluntarios_donantes():
         print("  8. Registrar rescate")
         print("  9. Volver al menú principal")
 
-        opcion = elegir_opcion({"1", "2", "3", "4", "5","6","7", "8", "9"})
+        opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5","6","7", "8", "9"})
         if opcion == "1":
            registrar_colaborador()
         elif opcion == "2":
@@ -57,11 +57,9 @@ def registrar_colaborador():
     # verificar si ya existe    
     for colaborador in colaboradores:
         if colaborador["nombre"].lower() == nombre.lower() and colaborador["telefono"] == telefono:
-            print(f"\n⚠ Ya existe un colaborador registrado con ese nombre y teléfono: {colaborador['nombre']}."
-)
-        print("Para registrar una nueva colaboración utilizá la opción 6 del menú.")
-        return
-
+            print(f"\n ⚠️ Ya existe un colaborador registrado con ese nombre y teléfono: {colaborador['nombre']}.")
+            print("Para registrar una nueva colaboración utilizá la opción 6 del menú.")
+            return
 
     fecha_ultimo_aporte = date.today().strftime("%Y-%m-%d")
 
@@ -264,7 +262,7 @@ def registrar_rescate():
         return
 
     if id_animal in colaborador["rescates"]: #si el id ingresado es igual al id que esta en rescates de un colaborar, ya existia.
-        print("⚠ Este animal ya está asociado a este colaborador.")
+        print("⚠️ Este animal ya está asociado a este colaborador.")
         return
 
 

@@ -2,19 +2,19 @@
     {
         "id": 1,
         "dni": "11221122",
-        "nombre": "Ingrid Cuadra",
-        "telefono": "1153535353",
+        "nombre": "Ingrid Anneris Cuadra Vilchez",
+        "telefono": "11882233",
         "email": "ingrid@mail.com",
         "tipo_vivienda": "departamento",
         "otras_mascotas": false
     },
     {
-        "id": 2,
-        "dni": "22233344",
-        "nombre": "Adoptante Prueba",
-        "telefono": "22332211",
-        "email": "prueba@mail.com",
-        "tipo_vivienda": "casa_sin_patio",
+        "id": 3,
+        "dni": "1231233",
+        "nombre": "Familia Prueba",
+        "telefono": "11665588",
+        "email": "familia_prueba@mail.com",
+        "tipo_vivienda": "departamento",
         "otras_mascotas": false
     }
 ]
