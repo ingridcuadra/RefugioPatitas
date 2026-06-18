@@ -128,6 +128,7 @@ def buscar_por_nombre_o_tarea():
     
     return resultado
 
+#utiliza la funcion de arriba
 def buscar_colaborador():
     formatear_titulo("BUSCAR COLABORADOR")
 
@@ -143,7 +144,7 @@ def buscar_colaborador():
     agregar_separador()
 
 
-#buscar por tipo de aporte
+
 def buscar_por_tipo_aporte():
     formatear_titulo("BUSCAR COLABORADOR POR TIPO DE APORTE")
 
@@ -182,7 +183,7 @@ def actualizar_fecha_ultimo_aporte():
         print("No se encontró ningún colaborador.")
         return
     
-    colaborador = resultados[0]
+    colaborador = resultados[0] #a chequear
     mostrar_colaborador(colaborador)
 
     nueva_fecha = input("Ingrese la nueva fecha del último aporte(YYYY-MM-DD): ").strip()
@@ -192,7 +193,7 @@ def actualizar_fecha_ultimo_aporte():
     guardar_registro(archivo_colaboradores, colaboradores)
 
 
-
+#boton 6
 def registrar_colaboracion():
     formatear_titulo("REGISTRAR COLABORACIÓN")
 

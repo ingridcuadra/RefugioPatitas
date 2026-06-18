@@ -192,6 +192,7 @@ def actualizar_atencion(animales):
         atencion_encontrada["observaciones"] = nuevas_observaciones
 
     print("\n✅ Atención actualizada.")
+    
 
 #atencion veterinaria conectada a animal
 def obtener_historial_animal(id_animal):
