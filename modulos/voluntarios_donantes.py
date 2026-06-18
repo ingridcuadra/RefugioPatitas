@@ -28,24 +28,25 @@ def submenu_voluntarios_donantes():
         print("  9. Volver al menú principal")
 
         opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5","6","7", "8", "9"})
-        if opcion == "1":
-           registrar_colaborador()
-        elif opcion == "2":
-            listar_colaboradores()
-        elif opcion == "3":
-           buscar_colaborador_por_tipo()
-        elif opcion == "4":
-            buscar_colaborador()
-        elif opcion == "5":
-            actualizar_fecha_ultimo_aporte()
-        elif opcion == "6":
-            registrar_colaboracion()
-        elif opcion == "7":
-            eliminar_colaborador()
-        elif opcion == "8":
-            registrar_rescate()
-        elif opcion == "9":
-            break
+        match opcion:
+            case "1":
+                registrar_colaborador()
+            case "2":
+                listar_colaboradores()
+            case "3":
+                buscar_colaborador_por_tipo()
+            case "4":
+                buscar_colaborador()
+            case "5":
+                actualizar_fecha_ultimo_aporte()
+            case "6":
+                registrar_colaboracion()
+            case "7":
+                eliminar_colaborador()
+            case "8":
+                registrar_rescate()
+            case "9":
+                break
 
 def registrar_colaborador():
     formatear_titulo("NUEVO COLABORADOR")
@@ -267,4 +268,5 @@ def registrar_rescate():
 
 
     colaborador["rescates"].append(id_animal)
+    guardar_registro(archivo_colaboradores, colaboradores) #no se añadia al json, ahora si
     print(f"✅ {colaborador['nombre']} asociado al rescate del animal #{id_animal}")

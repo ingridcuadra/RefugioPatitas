@@ -44,9 +44,8 @@
         "nombre": "enzo",
         "telefono": "11112222",
         "tipo_aporte": "donante",
-        "tipo_tarea": "alimento balanceado",
-        "fecha_ultimo_aporte": "2026-06-17",
-        "cantidad_colaboraciones": 1,
-        "rescates": []
+        "tipo_tarea": "paseador de perros",
+        "fecha_ultimo_aporte": "2026-06-18",
+        "cantidad_colaboraciones": 1
     }
 ]

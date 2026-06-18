@@ -20,20 +20,21 @@ def submenu_atencion_veterinaria(animales):
         print("  9. Volver al menú principal")
 
         opcion = elegir_opcion("¿Qué querés hacer?", {"1", "2", "3", "4", "5","6", "9"})
-        if opcion == "1":
-            registrar_atencion(animales)
-        elif opcion == "2":
-            listar_atenciones(animales)
-        elif opcion == "3":
-            buscar_atencion_por_animal(animales)
-        elif opcion == "4":
-            buscar_atencion_por_tipo(animales)
-        elif opcion == "5":
-            actualizar_atencion(animales)
-        elif opcion == "6":
-            eliminar_atencion(animales)
-        elif opcion == "9":
-            break
+        match opcion:
+            case "1":
+                registrar_atencion(animales)
+            case "2":
+                listar_atenciones(animales)
+            case "3":
+                buscar_atencion_por_animal(animales)
+            case "4":
+                buscar_atencion_por_tipo(animales)
+            case "5":
+                actualizar_atencion(animales)
+            case "6":
+                eliminar_atencion(animales)
+            case  "9":
+                break
 
 
 def registrar_atencion(animales):
@@ -117,6 +118,7 @@ def buscar_por_id_animal():
 
     return resultados
 
+#utiliza la funcion de arriba
 def buscar_atencion_por_animal(animales):
     formatear_titulo("BUSCAR ATENCION POR ANIMAL")
     resultados = buscar_por_id_animal()
@@ -146,6 +148,7 @@ def buscar_por_tipo():
 
     return resultados
 
+#utiliza la funcion de arriba
 def buscar_atencion_por_tipo(animales):
     resultados = buscar_por_tipo()
 
